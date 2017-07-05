@@ -9,22 +9,24 @@ var style = `
     .heading {
         font-size: 40;
         visibility: hidden;
+        color: red;
     }
 
     .detail {
         font-size: 30;
     }
+
+    img {
+        background-color: red;
+        overflow: hidden;
+    }
 `;
 
 function displayWeather(city, temp, humidity) {
-    var content = `<span class='heading'>${settings.city}</span> ${temp}°C, ${humidity}%`;
+    var content = `🌡${temp}°C 💦${humidity}%`;
 
     var html = `
-        <html>
-        <style>${style}</style>
-        <head><meta charset="UTF-8"></head>
-        <body>${content}</body>
-        </html>
+        <style>${style}</style>${content}
     `;
 
     api.display(html);
