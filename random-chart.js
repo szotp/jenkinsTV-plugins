@@ -3,7 +3,7 @@ var result = {
 	"value" : Array.apply(null, Array(10)).map(Number.prototype.valueOf,0)
 };
 
-refreshInterval = 0.5;
+refreshInterval = 60;
 
 function tick() {
 	result.value.push(Math.random() * 5);
