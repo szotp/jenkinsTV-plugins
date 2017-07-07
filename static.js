@@ -1,3 +1,3 @@
 function tick() {
-    return [settings];
+    return settings.value;
 }
