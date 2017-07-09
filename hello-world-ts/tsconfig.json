@@ -5,6 +5,7 @@
         "noImplicitAny" : true,
         "outFile": "main.js",
         "strictNullChecks": true,
+        "newLine": "CRLF",
         "lib": [
             "es2015"
         ]

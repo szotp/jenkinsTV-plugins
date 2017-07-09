@@ -25,8 +25,11 @@ class App {
 
 var app = new App();
 
-interface Fragment { }
+interface Fragment {
+    kind: string
+}
 
 class TextFragment implements Fragment {
+    kind: string = "text"
     value: string
 }

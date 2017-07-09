@@ -58,6 +58,7 @@ var App = (function () {
 var app = new App();
 var TextFragment = (function () {
     function TextFragment() {
+        this.kind = "text";
     }
     return TextFragment;
 }());
