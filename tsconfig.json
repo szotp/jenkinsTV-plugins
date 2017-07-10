@@ -3,7 +3,6 @@
     "compilerOptions": {
         "module": "system",
         "noImplicitAny" : true,
-        "outFile": "main.js",
         "strictNullChecks": true,
         "newLine": "CRLF",
         "lib": [
@@ -11,7 +10,6 @@
         ]
     },
     "include": [
-        "../lib.ts",
-        "src/*"
+        "lib.ts"
     ]
 }

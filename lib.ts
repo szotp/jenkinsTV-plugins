@@ -1,6 +1,6 @@
 interface NativeApi {
     get(path: string, callback: (content? : string) => void): void
-    display(data : [Fragment]): void
+    display(data : Fragment[]): void
 }
 
 declare var api: NativeApi
@@ -12,18 +12,19 @@ class App {
         });
     }
 
-    display(data : [Fragment]): void {
+    display(...data : Fragment[]): void {
         api.display(data)
     }
 
     displayText(text: string): void {
-        let fragment = new TextFragment();
-        fragment.value = text
-        this.display([fragment])
+        this.display(
+            new TextFragment(text)
+        )
     }
 }
 
 var app = new App();
+var refreshInterval = 0
 
 interface Fragment {
     kind: string
@@ -32,4 +33,15 @@ interface Fragment {
 class TextFragment implements Fragment {
     kind: string = "text"
     value: string
+    constructor(value: string) {
+        this.value = value
+    }
+}
+
+class ChartFragment implements Fragment {
+    kind: string = "chart"
+    value: number[]
+    constructor(value: number[]) {
+        this.value = value
+    }
 }

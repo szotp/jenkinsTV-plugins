@@ -45,13 +45,15 @@ var App = (function () {
             });
         });
     };
-    App.prototype.display = function (data) {
+    App.prototype.display = function () {
+        var data = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            data[_i] = arguments[_i];
+        }
         api.display(data);
     };
     App.prototype.displayText = function (text) {
-        this.display([
-            new TextFragment(text)
-        ]);
+        this.display(new TextFragment(text));
     };
     return App;
 }());
@@ -71,14 +73,53 @@ var ChartFragment = (function () {
     }
     return ChartFragment;
 }());
+var ReviewData = (function () {
+    function ReviewData() {
+        this.values = [];
+    }
+    ReviewData.prototype.parse = function (html) {
+        this.parseStatus(html);
+        this.parseChart(html);
+    };
+    ReviewData.prototype.parseStatus = function (html) {
+        var regex = /<strong>iOS App Store<\/strong> (.*)<\/h4>/;
+        var result = regex.exec(html);
+        if (result == null) {
+            this.status = "error";
+            return;
+        }
+        this.status = result[1];
+    };
+    ReviewData.prototype.parseChart = function (html) {
+        var regex = /points\.push\( .*, (.*)]\);/g;
+        var match;
+        while (match = regex.exec(html)) {
+            this.values.push(+match[1]);
+            if (this.values.length >= 14) {
+                break;
+            }
+        }
+        this.values = this.values.reverse();
+    };
+    return ReviewData;
+}());
 function tickAsync() {
     return __awaiter(this, void 0, void 0, function () {
+        var html, data;
         return __generator(this, function (_a) {
-            app.display(new TextFragment("hello world"));
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, app.get("http://appreviewtimes.com")];
+                case 1:
+                    html = _a.sent();
+                    data = new ReviewData();
+                    data.parse(html);
+                    app.display(new TextFragment(data.status), new ChartFragment(data.values));
+                    return [2 /*return*/];
+            }
         });
     });
 }
+refreshInterval = 3600;
 function tick() {
     tickAsync();
 }

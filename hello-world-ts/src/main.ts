@@ -1,6 +1,7 @@
 async function tickAsync() {
-    var result = await app.get("site");
-    app.displayText("hello world");
+    app.display(
+        new TextFragment("hello world")
+    )
 }
 
 function tick() {
