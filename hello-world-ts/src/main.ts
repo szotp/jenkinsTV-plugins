@@ -3,7 +3,3 @@ async function tickAsync() {
         new TextFragment("hello world")
     )
 }
-
-function tick() {
-    tickAsync()
-}

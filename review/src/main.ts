@@ -33,19 +33,16 @@ class ReviewData {
     }
 }
 
+
 async function tickAsync() {
     let html = await app.get("http://appreviewtimes.com");
     let data = new ReviewData()
     data.parse(html)
 
     app.display(
-        new TextFragment(data.status),
-        new ChartFragment(data.values)
+        new TextFragment(`Review times: ${data.status}`),
+        //new ChartFragment(data.values)
     );
 }
 
 refreshInterval = 3600
-
-function tick() {
-    tickAsync()
-}

@@ -33,6 +33,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+function tick() {
+    tickAsync();
+}
 var App = (function () {
     function App() {
     }
@@ -45,13 +48,15 @@ var App = (function () {
             });
         });
     };
-    App.prototype.display = function (data) {
+    App.prototype.display = function () {
+        var data = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            data[_i] = arguments[_i];
+        }
         api.display(data);
     };
     App.prototype.displayText = function (text) {
-        this.display([
-            new TextFragment(text)
-        ]);
+        this.display(new TextFragment(text));
     };
     return App;
 }());
@@ -78,7 +83,4 @@ function tickAsync() {
             return [2 /*return*/];
         });
     });
-}
-function tick() {
-    tickAsync();
 }

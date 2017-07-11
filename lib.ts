@@ -4,6 +4,11 @@ interface NativeApi {
 }
 
 declare var api: NativeApi
+declare var settings: any
+
+function tick() {
+    tickAsync()
+}
 
 class App {
     async get(path: string): Promise<string> {

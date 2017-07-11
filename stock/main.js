@@ -76,50 +76,20 @@ var ChartFragment = (function () {
     }
     return ChartFragment;
 }());
-var ReviewData = (function () {
-    function ReviewData() {
-        this.values = [];
-    }
-    ReviewData.prototype.parse = function (html) {
-        this.parseStatus(html);
-        this.parseChart(html);
-    };
-    ReviewData.prototype.parseStatus = function (html) {
-        var regex = /<strong>iOS App Store<\/strong> (.*)<\/h4>/;
-        var result = regex.exec(html);
-        if (result == null) {
-            this.status = "error";
-            return;
-        }
-        this.status = result[1];
-    };
-    ReviewData.prototype.parseChart = function (html) {
-        var regex = /points\.push\( .*, (.*)]\);/g;
-        var match;
-        while (match = regex.exec(html)) {
-            this.values.push(+match[1]);
-            if (this.values.length >= 14) {
-                break;
-            }
-        }
-        this.values = this.values.reverse();
-    };
-    return ReviewData;
-}());
+refreshInterval = 3600;
 function tickAsync() {
     return __awaiter(this, void 0, void 0, function () {
-        var html, data;
+        var text, json, response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, app.get("http://appreviewtimes.com")];
+                case 0: return [4 /*yield*/, app.get("http://www.google.com/finance/info?q=" + settings.value)];
                 case 1:
-                    html = _a.sent();
-                    data = new ReviewData();
-                    data.parse(html);
-                    app.display(new TextFragment("Review times: " + data.status));
+                    text = _a.sent();
+                    json = JSON.parse(text.slice(3));
+                    response = json[0];
+                    app.displayText(response.t + " $" + response.l_cur);
                     return [2 /*return*/];
             }
         });
     });
 }
-refreshInterval = 3600;
