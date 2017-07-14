@@ -53,6 +53,9 @@ var App = (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             data[_i] = arguments[_i];
         }
+        this.displayArray(data);
+    };
+    App.prototype.displayArray = function (data) {
         api.display(data);
     };
     App.prototype.displayText = function (text) {

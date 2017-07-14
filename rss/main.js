@@ -80,17 +80,44 @@ var ChartFragment = (function () {
     return ChartFragment;
 }());
 refreshInterval = 3600;
+function showItem(item) {
+    var date = new Date(item.pubDate.replace(" ", "T"));
+    var seconds = (new Date().valueOf() - date.valueOf()) / 1000;
+    var minutes = seconds / 60;
+    var hours = minutes / 60;
+    var days = hours / 24;
+    var status = "Latest news";
+    if (hours > 1) {
+        status = Math.ceil(hours) + "h ago";
+    }
+    if (days > 1) {
+        status = Math.ceil(days) + "d ago";
+    }
+    return new TextFragment(status + ":  " + item.title);
+}
+var SpaceFragment = (function () {
+    function SpaceFragment() {
+        this.kind = "space";
+    }
+    return SpaceFragment;
+}());
 function tickAsync() {
     return __awaiter(this, void 0, void 0, function () {
-        var text, json, response;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, app.get("http://www.google.com/finance/info?q=" + settings.value)];
+        var text, json, response, result, _i, _a, item;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, app.get("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fdeveloper.apple.com%2Fnews%2Frss%2Fnews.rss")];
                 case 1:
-                    text = _a.sent();
-                    json = JSON.parse(text.slice(3));
-                    response = json[0];
-                    app.displayText(response.t + " $" + response.l_cur);
+                    text = _b.sent();
+                    json = JSON.parse(text);
+                    response = json;
+                    result = [];
+                    for (_i = 0, _a = response.items.slice(0, 4); _i < _a.length; _i++) {
+                        item = _a[_i];
+                        result.push(showItem(item));
+                        result.push(new TextFragment("   "));
+                    }
+                    app.displayArray(result);
                     return [2 /*return*/];
             }
         });

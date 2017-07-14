@@ -1,0 +1,17 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "module": "system",
+        "noImplicitAny" : true,
+        "outFile": "main.js",
+        "strictNullChecks": true,
+        "newLine": "CRLF",
+        "lib": [
+            "es2015"
+        ]
+    },
+    "include": [
+        "../lib.ts",
+        "src/*"
+    ]
+}

@@ -18,6 +18,10 @@ class App {
     }
 
     display(...data : Fragment[]): void {
+        this.displayArray(data)
+    }
+
+    displayArray(data : Fragment[]): void {
         api.display(data)
     }
 
