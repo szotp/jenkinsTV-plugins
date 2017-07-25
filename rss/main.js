@@ -103,7 +103,7 @@ var SpaceFragment = (function () {
 }());
 function tickAsync() {
     return __awaiter(this, void 0, void 0, function () {
-        var text, json, response, result, _i, _a, item;
+        var text, json, response, amount, result, _i, _a, item;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, app.get("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fdeveloper.apple.com%2Fnews%2Frss%2Fnews.rss")];
@@ -111,8 +111,12 @@ function tickAsync() {
                     text = _b.sent();
                     json = JSON.parse(text);
                     response = json;
+                    amount = 1;
+                    if (settings.amount != undefined) {
+                        amount = settings.amount;
+                    }
                     result = [];
-                    for (_i = 0, _a = response.items.slice(0, 4); _i < _a.length; _i++) {
+                    for (_i = 0, _a = response.items.slice(0, amount); _i < _a.length; _i++) {
                         item = _a[_i];
                         result.push(showItem(item));
                         result.push(new TextFragment("   "));

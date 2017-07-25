@@ -2,6 +2,7 @@ refreshInterval = 3600
 
 interface Settings {
     value: string
+    amount: number
 }
 
 interface ApiResponse {
@@ -42,9 +43,14 @@ async function tickAsync() {
     let text = await app.get("https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fdeveloper.apple.com%2Fnews%2Frss%2Fnews.rss")
     let json = JSON.parse(text)
     let response = json as ApiResponse
+    let amount = 1
+
+    if (settings.amount != undefined) {
+        amount = settings.amount
+    }
 
     var result: Fragment[] = []
-    for (let item of response.items.slice(0, 4)) {
+    for (let item of response.items.slice(0, amount)) {
         result.push(showItem(item))
         result.push(new TextFragment("   "))
     }
